@@ -1,0 +1,49 @@
+[project]
+name = "congress-embeddings"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11.10"
+license = {text = "MIT"}
+authors = [
+  {name = "Ellis Valentiner", email = "ellis.valentiner@no.replay.github.com"},
+]
+dependencies = [
+    "black>=24.10.0",
+    "chromadb>=0.6.3",
+    "inflection>=0.5.1",
+    "kaleido==0.2.0",
+    "pandas>=2.2.3",
+    "plotly-express>=0.4.1",
+    "pydantic-settings>=2.7.1",
+    "python-json-logger>=3.2.1",
+    "scikit-learn>=1.6.1",
+    "scrapy>=2.12.0",
+    "umap-learn>=0.5.7",
+]
+dynamic = ["version"]
+
+[dependency-groups]
+dev = [
+    "bandit>=1.8.2",
+    "black>=24.10.0",
+    "prospector>=1.14.0",
+    "ruff>=0.9.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[project.scripts]
+process = "src.task.processor:main"
+search = "src.task.search:main"
+label = "src.task.label:main"
+reduce = "src.task.reducer:main"
+visualize = "src.task.visualize:main"
+outlier = "src.task.outlier:main"
