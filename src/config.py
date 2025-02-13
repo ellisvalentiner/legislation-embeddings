@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Configuration utilities."""
-import sys
+
 from pathlib import Path
 from typing import List
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # ~*~ coding: utf-8 ~*~
 """Scrapy settings for crawler."""
+
 BOT_NAME = "src.crawler"
 
 SPIDER_MODULES = ["src.crawler.spiders"]

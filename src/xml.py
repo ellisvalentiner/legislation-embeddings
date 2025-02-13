@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """XML parsing utilities."""
+
 from pathlib import Path
 from typing import Dict, Optional, Any
 from xml.etree import ElementTree

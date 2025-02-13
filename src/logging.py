@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Logging utilities."""
+
 import logging
 
 from pythonjsonlogger.json import JsonFormatter

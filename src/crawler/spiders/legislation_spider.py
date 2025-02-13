@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 import scrapy
 from scrapy.http import Response
 
+
 # HEADERS = {"Accept": "application/json"}
 
 

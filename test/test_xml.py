@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Test XML."""
-import pytest
 from pathlib import Path
+
 from src.xml import XMLParser
 
 

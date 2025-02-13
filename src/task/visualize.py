@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Visualize embeddings."""
+
 import pandas as pd
-import numpy as np
 import plotly.express as px
 from inflection import titleize
 

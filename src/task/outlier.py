@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Outliers."""
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 import plotly.express as px
+from sklearn.neighbors import NearestNeighbors
 
 from src.config import Config
-
-from sklearn.neighbors import NearestNeighbors
 
 
 def find_most_isolated_points(df, n=5, k_neighbors=2):

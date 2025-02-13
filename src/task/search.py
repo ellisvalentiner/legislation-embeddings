@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Search"""
+
 from typing import Any, Dict, List
 
 from src.config import Config

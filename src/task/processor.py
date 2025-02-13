@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Data processing utilities."""
+
 import random
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor

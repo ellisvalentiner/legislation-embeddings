@@ -2,6 +2,7 @@
 # *-*- coding: utf-8 -*-
 """Test outlier detection."""
 import pandas as pd
+
 from src.task.outlier import find_most_isolated_points
 
 

@@ -2,7 +2,7 @@
 # *-*- coding: utf-8 -*-
 """Test configuration."""
 import sys
-import pytest
+
 from src.config import Config
 
 

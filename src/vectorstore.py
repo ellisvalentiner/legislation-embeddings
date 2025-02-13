@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Chroma utilities."""
+
 import sqlite3
 from datetime import datetime
 from pathlib import Path

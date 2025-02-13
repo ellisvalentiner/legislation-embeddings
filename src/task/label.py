@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Label embeddings."""
+
 import pandas as pd
 
 from src.config import Config
