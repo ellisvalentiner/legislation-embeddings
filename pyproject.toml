@@ -27,6 +27,9 @@ dev = [
     "bandit>=1.8.2",
     "black>=24.10.0",
     "prospector>=1.14.0",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pytest-xdist>=3.6.1",
     "ruff>=0.9.3",
 ]
 
@@ -47,3 +50,12 @@ label = "src.task.label:main"
 reduce = "src.task.reducer:main"
 visualize = "src.task.visualize:main"
 outlier = "src.task.outlier:main"
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-report=term-missing"
+testpaths = ["test"]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = ["test/*"]
