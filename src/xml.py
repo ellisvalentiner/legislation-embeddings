@@ -5,6 +5,7 @@
 from pathlib import Path
 from typing import Dict, Optional, Any
 from defusedxml import ElementTree
+from xml.etree.ElementTree import Element
 
 from inflection import underscore
 
@@ -16,7 +17,7 @@ class XMLParser:
         self.namespaces = {"dc": "http://purl.org/dc/elements/1.1/"}
 
     @staticmethod
-    def extract_legislation_attributes(root: ElementTree.Element) -> Dict[str, str]:
+    def extract_legislation_attributes(root: Element) -> Dict[str, str]:
         """Extract attributes from the root element of a legislation XML file.
 
         Args:
@@ -28,7 +29,7 @@ class XMLParser:
         elements = ["bill-stage", "bill-type", "dms-id", "public-private"]
         return {underscore(key): root.get(key, "") for key in elements}
 
-    def extract_form_info(self, form: Optional[ElementTree.Element]) -> Dict[str, str]:
+    def extract_form_info(self, form: Optional[Element]) -> Dict[str, str]:
         """Extract attributes from the form element of a legislation XML file.
 
         Args:
@@ -66,7 +67,7 @@ class XMLParser:
                     d[underscore(item.tag)] = item.text
         return d
 
-    def extract_dublin_core(self, root: ElementTree.Element) -> Dict[str, str]:
+    def extract_dublin_core(self, root: Element) -> Dict[str, str]:
         """Extract attributes from the Dublin Core namespace of a legislation XML file.
 
         Args:
@@ -136,7 +137,7 @@ class XMLParser:
             return {}
 
     @staticmethod
-    def extract_text_content(root: ElementTree.Element) -> str:
+    def extract_text_content(root: Element) -> str:
         """Extract text content from the XML.
 
         Args:
