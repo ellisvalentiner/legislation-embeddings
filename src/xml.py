@@ -4,7 +4,7 @@
 
 from pathlib import Path
 from typing import Dict, Optional, Any
-from xml.etree import ElementTree
+from defusedxml import ElementTree
 
 from inflection import underscore
 
