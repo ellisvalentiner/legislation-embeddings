@@ -6,7 +6,7 @@ import random
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List, Callable
 
 from src.config import Config
 from src.logging import logger
@@ -18,7 +18,7 @@ class BatchProcessor:
     def __init__(self, max_workers: int = 4):
         self.max_workers = max_workers
 
-    def process_files(self, files: list[Path], process_fn: callable) -> list[Any]:
+    def process_files(self, files: list[Path], process_fn: Callable) -> list[Any]:
         """Process a list of files in parallel.
 
         Args:
@@ -104,7 +104,7 @@ class DataProcessor:
         results = self.batch_processor.process_files(files, self.process_file)
 
         # Filter out None results and process valid ones
-        valid_results = list(filter(None, results))
+        valid_results: List[Dict[str, Any]] = list(filter(None, results))
 
         if not valid_results:
             logger.warning("No valid results in batch")

@@ -7,15 +7,17 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any
 
+import numpy as np
 import pandas as pd
 from chromadb import PersistentClient
+from chromadb.api.types import IncludeEnum
 
 from src.config import Config
 
 
 class LegislationVectorStore:
     def __init__(self, config: Config = Config()):
-        self.client = PersistentClient(config.db_dir)
+        self.client = PersistentClient(config.db_dir.name)
         self.collection = self.client.create_collection(
             name="legislation", get_or_create=True
         )
@@ -24,10 +26,11 @@ class LegislationVectorStore:
 
     def to_df(self):
         """Convert the vector store to a pandas DataFrame."""
-        result = self.collection.get(include=["metadatas", "embeddings"])
+        result = self.collection.get(include=[IncludeEnum.metadatas, IncludeEnum.embeddings])
         ids = result["ids"]
         metadatas = result["metadatas"]
         embeddings = result["embeddings"]
+        assert isinstance(embeddings, np.ndarray)
 
         df = pd.DataFrame(metadatas)
         for i in range(0, embeddings.shape[1]):

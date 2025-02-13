@@ -28,5 +28,5 @@ def main():
         title="UMAP Legislation Embeddings",
     )
     fig.write_image(
-        config.out_dir / f"fig-{config.color}.png", width=800, height=600, scale=2
+        config.out_dir / "fig.png", width=800, height=600, scale=2
     )

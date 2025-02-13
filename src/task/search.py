@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """Search"""
 
-from typing import Any, Dict, List
+from typing import Any, Mapping
+
+from chromadb import QueryResult
 
 from src.config import Config
 from src.vectorstore import LegislationVectorStore
@@ -12,7 +14,7 @@ def search(
     query: str = "",
     vectorstore: LegislationVectorStore = LegislationVectorStore(),
     limit: int = 5,
-) -> List[Dict[str, Any]]:
+) -> list[Any] | list[Mapping[str, str | int | float | bool]]:
     """Search the vector store for similar legislation.
 
     Args:
@@ -23,8 +25,11 @@ def search(
     Returns:
         A list of similar legislation
     """
-    results = vectorstore.collection.query(query_texts=[query], n_results=limit)
-    return [_ for r in results["metadatas"] for _ in r]
+    results: QueryResult = vectorstore.collection.query(query_texts=[query], n_results=limit)
+    metadatas = results.get("metadatas", [])
+    if not metadatas:
+        return []
+    return [_ for r in metadatas for _ in r]
 
 
 def main():

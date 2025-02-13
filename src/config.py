@@ -29,9 +29,9 @@ class Config(BaseSettings):
 
     model_config = SettingsConfigDict(cli_parse_args=True)
 
-    db_dir: str = "embeddings"
-    data_dir: Path = "data"
-    out_dir: Path = "out"
+    db_dir: Path = Path("embeddings")
+    data_dir: Path = Path("data")
+    out_dir: Path = Path("out")
     batch_size: int = 100
     chunk_size: int = 1000
     chunk_overlap: int = 200

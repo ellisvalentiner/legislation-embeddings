@@ -4,10 +4,10 @@
 
 from pathlib import Path
 from typing import Dict, Optional, Any
-from lxml import etree as ElementTree
-from lxml.etree import Element
 
 from inflection import underscore
+from lxml import etree as ElementTree
+from lxml.etree import Element
 
 from src.logging import logger
 
@@ -56,7 +56,7 @@ class XMLParser:
             "session",
             "sponsor",
         ]
-        d = {}
+        d: Dict[str, str] = {}
         for item in form.iter():
             if item.tag in elements:
                 if item.tag in d:

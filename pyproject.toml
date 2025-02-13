@@ -59,3 +59,8 @@ testpaths = ["test"]
 branch = true
 source = ["src"]
 omit = ["test/*"]
+
+[tool.mypy]
+pretty = true
+check_untyped_defs = true
+ignore_missing_imports = true
