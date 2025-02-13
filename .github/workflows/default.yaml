@@ -7,10 +7,9 @@ on:
     branches:
       - main
 
-runs-on: ubuntu-latest
-
 jobs:
   coverage:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install the latest version of uv
@@ -22,6 +21,7 @@ jobs:
       - name: Run tests
         run: uv run pytest
   format:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install the latest version of uv
@@ -33,6 +33,7 @@ jobs:
       - name: Check formatting
         run: uv run ruff check
   security:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install the latest version of uv
@@ -44,6 +45,7 @@ jobs:
       - name: Check formatting
         run: uv run bandit -r src/
   type:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install the latest version of uv
