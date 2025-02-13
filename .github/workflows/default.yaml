@@ -1,0 +1,23 @@
+name: Default
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          pyproject-file: "pyproject.toml"
+      - name: Install dependencies
+        run: uv sync --group=dev
+      - name: Run tests
+        run: uv run pytest
