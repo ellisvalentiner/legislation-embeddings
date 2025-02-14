@@ -24,20 +24,6 @@ class LegislationVectorStore:
         self.db_dir = Path(config.db_dir)
         self._init_db()
 
-    def to_df(self):
-        """Convert the vector store to a pandas DataFrame."""
-        result = self.collection.get(include=[IncludeEnum.metadatas, IncludeEnum.embeddings])
-        ids = result["ids"]
-        metadatas = result["metadatas"]
-        embeddings = result["embeddings"]
-        assert isinstance(embeddings, np.ndarray)
-
-        df = pd.DataFrame(metadatas)
-        for i in range(0, embeddings.shape[1]):
-            df[f"pca_{i}"] = embeddings[:, i]
-        df["id"] = ids
-        return df
-
     def _init_db(self) -> None:
         """Initialize the database."""
         with sqlite3.connect(self.db_dir / "chroma.sqlite3") as conn:

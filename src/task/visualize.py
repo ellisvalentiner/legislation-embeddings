@@ -27,6 +27,4 @@ def main():
         labels={"0": "Dimension 1", "1": "Dimension 2"},
         title="UMAP Legislation Embeddings",
     )
-    fig.write_image(
-        config.out_dir / "fig.png", width=800, height=600, scale=2
-    )
+    fig.write_image(config.out_dir / "fig.png", width=800, height=600, scale=2)

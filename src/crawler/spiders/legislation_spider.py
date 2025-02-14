@@ -56,7 +56,8 @@ class LegislationSpider(scrapy.Spider):
     def parse(self, response: Response, **kwargs):
         """Parse the response and yield the next request."""
         content_type_bytes = response.headers.get("Content-Type", def_val=b"")
-        assert content_type_bytes is not None
+        if content_type_bytes is None:
+            content_type_bytes = b""
         content_type = content_type_bytes.decode()
 
         if "application/json" in content_type:
@@ -82,7 +83,8 @@ class LegislationSpider(scrapy.Spider):
                 f.write(response.body)
 
             last_modified_bytes = response.headers.get("Last-Modified", def_val=b"")
-            assert last_modified_bytes is not None
+            if last_modified_bytes is None:
+                last_modified_bytes = b""
 
             # Update state
             self.downloaded_files[url] = {

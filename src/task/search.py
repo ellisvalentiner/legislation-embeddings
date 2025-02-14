@@ -25,7 +25,9 @@ def search(
     Returns:
         A list of similar legislation
     """
-    results: QueryResult = vectorstore.collection.query(query_texts=[query], n_results=limit)
+    results: QueryResult = vectorstore.collection.query(
+        query_texts=[query], n_results=limit
+    )
     metadatas = results.get("metadatas", [])
     if not metadatas:
         return []
