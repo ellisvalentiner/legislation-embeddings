@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --group=dev
       - name: Check formatting
-        run: uv run ruff check
+        run: uv run ruff check src/ test/
   security:
     runs-on: ubuntu-latest
     steps:

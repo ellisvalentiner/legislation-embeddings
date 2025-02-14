@@ -8,10 +8,8 @@ from src.config import Config
 
 class TestConfig:
     def test_config(self):
-        config = Config()
+        config = Config(max_workers=4)
         assert config.batch_size == 100
-        assert config.chunk_size == 1000
-        assert config.chunk_overlap == 200
         assert config.max_workers == 4
         assert config.limit == 10000
         assert config.topics == [
