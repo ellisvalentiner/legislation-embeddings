@@ -11,9 +11,6 @@ import scrapy
 from scrapy.http import Response
 
 
-# HEADERS = {"Accept": "application/json"}
-
-
 class LegislationSpider(scrapy.Spider):
     """Scrapy spider for scraping Congress data."""
 

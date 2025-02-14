@@ -4,6 +4,7 @@
 
 from pathlib import Path
 from typing import List
+from multiprocessing import cpu_count
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -33,9 +34,7 @@ class Config(BaseSettings):
     data_dir: Path = Path("data")
     out_dir: Path = Path("out")
     batch_size: int = 100
-    chunk_size: int = 1000
-    chunk_overlap: int = 200
-    max_workers: int = 4
+    max_workers: int = cpu_count()
     limit: int = 10000
     topics: List[str] = TOPICS
     query: str = "Judiciary"

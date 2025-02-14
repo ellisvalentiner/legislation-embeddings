@@ -56,3 +56,15 @@ jobs:
         run: uv sync --group=dev
       - name: Check formatting
         run: uv run mypy src/
+  vulture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --group=dev
+      - name: Check formatting
+        run: uv run vulture src/ whitelist.py
