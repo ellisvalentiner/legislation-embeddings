@@ -51,7 +51,7 @@ The legislation data are XML files containing the legislation text and metadata.
 You can run the crawler with:
 
 ```bash
-scrapy crawl legislation
+uv run scrapy crawl legislation
 ```
 
 This will walk the hierarchy of the Congress legislation API and download all legislation data into a directory (`/data`).
