@@ -12,6 +12,17 @@ The document embeddings can be used for a variety of purposes, such as identifyi
 Congress has an official [bulk data API](https://www.govinfo.gov/bulkdata/) for accessing legislation data.
 The data is organized by each Congress, their sessions, and includes bills, simple resolutions, joint resolutions, and concurrent resolutions.
 
+| Legislation Type | Short Code |
+|:-----------------|:-----------|
+| House Concurrent Resolution | `hconres` |
+| House Joint Resolution | `hjres` |
+| House Bill | `hr` |
+| House Resolution | `hres` |
+| Senate Bill | `s` |
+| Senate Concurrent Resolution | `sconres` |
+| Senate Joint Resolution | `sjres` |
+| Senate Rule | `sres` |
+
 Each file is in XML format and consists of the legislation text and metadata.
 
 ## Usage
