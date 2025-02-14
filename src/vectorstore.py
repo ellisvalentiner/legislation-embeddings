@@ -7,10 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any
 
-import numpy as np
-import pandas as pd
 from chromadb import PersistentClient
-from chromadb.api.types import IncludeEnum
 
 from src.config import Config
 
