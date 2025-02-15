@@ -16,6 +16,7 @@ dependencies = [
     "plotly-express>=0.4.1",
     "pydantic-settings>=2.7.1",
     "python-json-logger>=3.2.1",
+    "regex>=2024.11.6",
     "scikit-learn>=1.6.1",
     "scrapy>=2.12.0",
     "umap-learn>=0.5.7",

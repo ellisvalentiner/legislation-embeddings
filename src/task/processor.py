@@ -1,17 +1,30 @@
 #!/usr/bin/env python3
 # *-*- coding: utf-8 -*-
 """Data processing utilities."""
-
 import random
 import sqlite3
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Dict, Any, Optional, List, Callable
+from typing import Dict, Any, Optional, List, Callable, Tuple
+
+import regex
 
 from src.config import Config
 from src.logging import logger
 from src.vectorstore import LegislationVectorStore
 from src.xml import XMLParser
+
+# All identified bill versions with priority ordering
+VERSION_PRIORITY = [
+    "ih", "is", "ips",  # Introduced
+    "rh", "rs", "rfh", "rfs", "rch", "rth", "rds", "rcs", "rhuc",  # Reported
+    "eh", "es", "eah", "eas",  # Engrossed
+    "pcs", "cps", "cds", "cph", "fph", "ath", "hds",  # Committee-related / procedural
+    "pp", "pap",  # Passed
+    "ats", "rts",  # Amendment-related
+    "enr"  # Enrolled (final)
+]
 
 
 class BatchProcessor:
@@ -40,6 +53,8 @@ class DataProcessor:
         self.vectorstore = LegislationVectorStore(config=config)
         self.batch_size = config.batch_size
         self.limit = config.limit
+        self.dedupe = config.dedupe
+        self.prefix = config.prefix
 
     def process_file(self, file_path: Path) -> Optional[Dict[str, Any]]:
         """Process a single file with error handling.
@@ -118,19 +133,19 @@ class DataProcessor:
             ids=[m["file_name"] for m in valid_results],
         )
 
-    def process_all(self, prefix: str = "", limit: int = 0) -> None:
+    def process_all(self) -> None:
         """Process all XML files in the bills directory.
 
         Returns:
             None
         """
-        if not limit:
-            limit = self.limit
-        files = list(self.data_dir.glob(f"{prefix}*.xml"))
-        if limit:
+        files = list(self.data_dir.glob(f"{self.prefix}*.xml"))
+        if self.dedupe:
+            files = self._dedupe_legislation(files)
+        if self.limit:
             # Randomly select a subset of files
             random.shuffle(files)
-            files = files[:limit]
+            files = files[:self.limit]
         total_files = len(files)
         logger.info("Found XML files to process", extra={"total-files": total_files})
 
@@ -149,6 +164,58 @@ class DataProcessor:
 
         # Persist the vector store
         logger.info("Processing complete")
+
+    @staticmethod
+    def _extract_filename_components(filename: Path) -> Optional[Tuple[int, str, int, str]]:
+        """
+        Extract components from a filename in the format "BILLS-118hres211ih.xml".
+
+        Parameters:
+        - filename (Path): The file path to extract components from.
+
+        Returns:
+        - Optional[Tuple[int, str, int, str]]: A tuple containing the Congress as an integer,
+          the legislation type as a string, the legislation number as an integer, and the
+          legislation status as a string. Returns None if the filename format is incorrect.
+        """
+        pattern = r'^BILLS-(\d{3})([a-z]+)(\d+)([a-z]+)\.xml$'
+        # Use regex to find matches
+        match = regex.match(pattern, filename.name)
+        if match:
+            # Extract components using capture groups
+            congress = int(match.group(1))
+            legislation_type = match.group(2)
+            legislation_number = int(match.group(3))
+            legislation_status = match.group(4)
+
+            return congress, legislation_type, legislation_number, legislation_status
+
+        # Return None if the pattern does not match
+        return None
+
+    def _dedupe_legislation(self, files):
+        d: Dict[int, Dict[str, Dict[int, str]]] = defaultdict(
+            lambda: defaultdict(lambda: defaultdict(str))
+        )
+        for file in files:
+            result = self._extract_filename_components(file)
+            if not result:
+                continue
+            congress, legislation_type, legislation_number, legislation_status = result
+            latest_status = d[congress][legislation_type][legislation_number]
+            if not latest_status:
+                d[congress][legislation_type][legislation_number] = legislation_status
+                continue
+            d[congress][legislation_type][legislation_number] = VERSION_PRIORITY[max(
+                VERSION_PRIORITY.index(latest_status),
+                VERSION_PRIORITY.index(legislation_status)
+            )]
+        files_subset = []
+        for congress, legislation_types in d.items():
+            for legislation_type, legislation_numbers in legislation_types.items():
+                for legislation_number, status in legislation_numbers.items():
+                    files_subset.append(Path("data") / f"BILLS-{congress}{legislation_type}{legislation_number}{status}.xml")
+        return files_subset
 
 
 def main():

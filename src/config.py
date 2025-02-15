@@ -30,11 +30,13 @@ class Config(BaseSettings):
 
     model_config = SettingsConfigDict(cli_parse_args=True)
 
-    db_dir: Path = Path("embeddings")
-    data_dir: Path = Path("data")
-    out_dir: Path = Path("out")
     batch_size: int = 100
-    max_workers: int = cpu_count()
+    data_dir: Path = Path("data")
+    db_dir: Path = Path("embeddings")
+    dedupe: bool = True
     limit: int = 10000
-    topics: List[str] = TOPICS
+    max_workers: int = cpu_count()
+    out_dir: Path = Path("out")
+    prefix: str = "BILLS-"
     query: str = "Judiciary"
+    topics: List[str] = TOPICS
