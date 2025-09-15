@@ -11,7 +11,7 @@ dependencies = [
     "black>=24.10.0",
     "chromadb>=0.6.3",
     "inflection>=0.5.1",
-    "kaleido==1.0.0",
+    "kaleido==1.1.0",
     "pandas>=2.2.3",
     "plotly-express>=0.4.1",
     "pydantic-settings>=2.7.1",
