@@ -8,18 +8,18 @@ authors = [
   {name = "Ellis Valentiner", email = "ellis.valentiner@no.replay.github.com"},
 ]
 dependencies = [
-    "black>=24.10.0",
-    "chromadb>=0.6.3",
+    "black>=26.3.1",
+    "chromadb>=1.5.7",
     "inflection>=0.5.1",
     "kaleido==1.2.0",
-    "pandas>=2.2.3",
+    "pandas>=3.0.2",
     "plotly-express>=0.4.1",
-    "pydantic-settings>=2.7.1",
-    "python-json-logger>=3.2.1",
-    "regex>=2024.11.6",
-    "scikit-learn>=1.6.1",
-    "scrapy>=2.12.0",
-    "umap-learn>=0.5.7",
+    "pydantic-settings>=2.13.1",
+    "python-json-logger>=4.1.0",
+    "regex>=2026.4.4",
+    "scikit-learn>=1.8.0",
+    "scrapy>=2.15.0",
+    "umap-learn>=0.5.12",
 ]
 dynamic = ["version"]
 
